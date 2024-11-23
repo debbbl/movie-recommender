@@ -1,18 +1,28 @@
 import streamlit as st
 import pickle
+import os
 import gzip
 import pandas as pd
 import requests
+print("Current working directory:", os.getcwd())
+print("Files in current directory:", os.listdir(os.getcwd()))
+# Get the directory of the current script
+base_dir = os.path.dirname(os.path.abspath(__file__))
+movie_model_path = os.path.join(base_dir, 'movie_dict.pkl.gz')
+print(movie_model_path)
+
+movie_similarity_model_path = os.path.join(base_dir, 'movie_similarity.pkl.gz')
+print(movie_similarity_model_path)
 
 # Loading the compressed pickle files with gzip
-with gzip.open('movie_dict.pkl.gz', 'rb') as f:
+with gzip.open(movie_model_path, 'rb') as f:
     movie_list = pickle.load(f)
 
 # Converting movie list to DataFrame
 movies = pd.DataFrame(movie_list)
 movie_title = movies['title'].values
 
-with gzip.open('movie_similarity.pkl.gz', 'rb') as f:
+with gzip.open(movie_similarity_model_path, 'rb') as f:
     movie_similarity = pickle.load(f)
 
 # Fetch movie poster and details
