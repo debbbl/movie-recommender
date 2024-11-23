@@ -1,13 +1,19 @@
 import streamlit as st
 import pickle
+import gzip
 import pandas as pd
 import requests
 
-# Load data and models
-movie_list = pickle.load(open('../models/movie_dict.pkl', 'rb'))
+# Loading the compressed pickle files with gzip
+with gzip.open('../models/movie_dict.pkl.gz', 'rb') as f:
+    movie_list = pickle.load(f)
+
+# Converting movie list to DataFrame
 movies = pd.DataFrame(movie_list)
 movie_title = movies['title'].values
-movie_similarity = pickle.load(open('../models/movie_similarity.pkl', 'rb'))
+
+with gzip.open('../models/movie_similarity.pkl.gz', 'rb') as f:
+    movie_similarity = pickle.load(f)
 
 # Fetch movie poster and details
 def fetch_movie_details(movie_id):
