@@ -5,14 +5,14 @@ import pandas as pd
 import requests
 
 # Loading the compressed pickle files with gzip
-with gzip.open('../models/movie_dict.pkl.gz', 'rb') as f:
+with gzip.open('movie_dict.pkl.gz', 'rb') as f:
     movie_list = pickle.load(f)
 
 # Converting movie list to DataFrame
 movies = pd.DataFrame(movie_list)
 movie_title = movies['title'].values
 
-with gzip.open('../models/movie_similarity.pkl.gz', 'rb') as f:
+with gzip.open('movie_similarity.pkl.gz', 'rb') as f:
     movie_similarity = pickle.load(f)
 
 # Fetch movie poster and details
